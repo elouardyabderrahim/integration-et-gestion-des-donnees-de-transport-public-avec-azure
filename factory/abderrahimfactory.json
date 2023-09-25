@@ -1,0 +1,9 @@
+{
+	"name": "abderrahimfactory",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7f72ac65-7b95-4f48-88a9-c9b33d68690c",
+		"tenantId": "a2e466aa-4f86-4545-b5b8-97da7c8febf3"
+	}
+}
