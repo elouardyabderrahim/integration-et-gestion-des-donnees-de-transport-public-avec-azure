@@ -1,0 +1,2 @@
+STORAGE_ACCOUNT_KEY =''
+STORAGE_ACCOUNT_NAME ='elouardystorage'
