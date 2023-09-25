@@ -1,0 +1,55 @@
+{
+	"name": "Automatisation",
+	"properties": {
+		"activities": [
+			{
+				"name": "transformation",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/aelouardy.ext@simplonformations.onmicrosoft.com/integration-et-gestion-des-donnees-de-transport-public-avec-azure/ETLDATABRICKS/Transformation"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksTransformation",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "NotebookSaveinpreprocessed",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "transformation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/aelouardy.ext@simplonformations.onmicrosoft.com/integration-et-gestion-des-donnees-de-transport-public-avec-azure/ETLDATABRICKS/saveInProcessed"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksTransformation",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
