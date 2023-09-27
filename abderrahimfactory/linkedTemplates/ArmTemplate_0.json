@@ -130,7 +130,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/triggerETL')]",
+			"name": "[concat(parameters('factoryName'), '/triggerETL2')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -150,7 +150,7 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 2,
-						"startTime": "2023-09-27T14:50:00",
+						"startTime": "2023-09-27T14:53:00",
 						"endTime": "2023-09-27T15:00:00",
 						"timeZone": "Morocco Standard Time"
 					}
