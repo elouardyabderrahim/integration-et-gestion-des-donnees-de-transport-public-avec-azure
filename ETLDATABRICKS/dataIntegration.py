@@ -86,7 +86,7 @@ for i in range(raw_file_count):
         df_peak_hours = df_peak_hours.withColumn("Peak_hour", df_peak_hours["AvgPassengers"] >= avg_passengers)
 
         pandasDF = df_peak_hours.toPandas()
-        file_name = f"/dbfs/mnt/publictransportdata/processed/peakhour/peakhour" + raw_csv_files[i].replace("raw", "").split("/")[-1].split(".")[0] + "_processed.csv"
+        file_name = f"/dbfs/mnt/publictransportdata/processed/peakhours/peakhour" + raw_csv_files[i].replace("raw", "").split("/")[-1].split(".")[0] + "_processed.csv"
         pandasDF.to_csv(file_name, index=False)
 
         # routes analysis
