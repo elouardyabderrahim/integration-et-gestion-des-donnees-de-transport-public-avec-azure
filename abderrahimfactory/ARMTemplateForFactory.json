@@ -81,6 +81,27 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 2,
+						"startTime": "2023-09-27T16:30:00",
+						"endTime": "2023-09-27T16:40:00",
+						"timeZone": "Morocco Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/triggerETLTRANSPORT')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
 				"runtimeState": "Started",
 				"pipelines": [
 					{
@@ -95,9 +116,9 @@
 				"typeProperties": {
 					"recurrence": {
 						"frequency": "Minute",
-						"interval": 2,
-						"startTime": "2023-09-27T16:30:00",
-						"endTime": "2023-09-27T16:40:00",
+						"interval": 3,
+						"startTime": "2023-09-27T17:00:00",
+						"endTime": "2023-09-28T17:10:00",
 						"timeZone": "Morocco Standard Time"
 					}
 				}
