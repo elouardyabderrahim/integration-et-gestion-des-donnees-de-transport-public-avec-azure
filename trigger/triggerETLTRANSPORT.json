@@ -2,15 +2,22 @@
 	"name": "triggerETLTRANSPORT",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
-		"pipelines": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Automatisation",
+					"type": "PipelineReference"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 3,
-				"startTime": "2023-09-27T15:45:00",
-				"endTime": "2023-09-28T17:00:00",
+				"startTime": "2023-09-27T17:00:00",
+				"endTime": "2023-09-28T17:10:00",
 				"timeZone": "Morocco Standard Time"
 			}
 		}
