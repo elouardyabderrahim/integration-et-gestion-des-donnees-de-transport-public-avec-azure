@@ -6,7 +6,25 @@ from pyspark.sql.types import StringType,IntegerType
 from pyspark.sql.functions import to_date, year, month, day, hour, minute, when, avg, regexp_replace, mean, count, round
 from pyspark.sql import SparkSession
 
+import config
 
+# Mounting data lake
+storageAccountName = config.STORAGE_ACCOUNT_NAME
+storageAccountAccessKey = config.STORAGE_ACCOUNT_KEY
+sasToken = config.SAS_TOKEN
+
+blobContainerName = "publictransportdata"
+mountPoint = "/mnt/publictransportdata/"
+if not any(mount.mountPoint == mountPoint for mount in dbutils.fs.mounts()):
+  try:
+    dbutils.fs.mount(
+      source = "wasbs://{}@{}.blob.core.windows.net".format(blobContainerName, storageAccountName),
+      mount_point = mountPoint,
+      extra_configs = {'fs.azure.sas.' + blobContainerName + '.' + storageAccountName + '.blob.core.windows.net': sasToken}
+    )
+    print("mount succeeded!")
+  except Exception as e:
+    print("mount exception", e)
 mountPoint = "/mnt/publictransportdata/"
 
 raw = f"{mountPoint}raw/"
@@ -84,4 +102,5 @@ for i in range(raw_file_count):
         info += "- " + raw_csv_files[i].split("/")[-1].split(".")[0] + "\n"
 
 # COMMAND ----------
+dbutils.fs.unmount("/mnt/publictransportdata/")
 print(info)
