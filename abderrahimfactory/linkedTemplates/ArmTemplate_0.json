@@ -13,7 +13,7 @@
 		},
 		"AzureDatabricksTransformation_properties_typeProperties_existingClusterId": {
 			"type": "string",
-			"defaultValue": "0925-075725-69tc6flm"
+			"defaultValue": "0927-080851-zorh7auc"
 		}
 	},
 	"variables": {
@@ -28,7 +28,7 @@
 				"annotations": [],
 				"type": "AzureDatabricks",
 				"typeProperties": {
-					"domain": "https://adb-1882600856783799.19.azuredatabricks.net",
+					"domain": "https://adb-4109617113315325.5.azuredatabricks.net",
 					"accessToken": {
 						"type": "SecureString",
 						"value": "[parameters('AzureDatabricksTransformation_accessToken')]"
@@ -45,7 +45,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "transformation",
+						"name": "mountNotebook",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -57,7 +57,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/aelouardy.ext@simplonformations.onmicrosoft.com/integration-et-gestion-des-donnees-de-transport-public-avec-azure/ETLDATABRICKS/Transformation"
+							"notebookPath": "/Repos/aelouardy.ext@simplonformations.onmicrosoft.com/integration-et-gestion-des-donnees-de-transport-public-avec-azure/ETLDATABRICKS/mount"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricksTransformation",
@@ -65,11 +65,11 @@
 						}
 					},
 					{
-						"name": "NotebookSaveinpreprocessed",
+						"name": "ETLNotebook",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "transformation",
+								"activity": "mountNotebook",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -84,7 +84,34 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/aelouardy.ext@simplonformations.onmicrosoft.com/integration-et-gestion-des-donnees-de-transport-public-avec-azure/ETLDATABRICKS/saveInProcessed"
+							"notebookPath": "/Repos/aelouardy.ext@simplonformations.onmicrosoft.com/integration-et-gestion-des-donnees-de-transport-public-avec-azure/ETLDATABRICKS/dataIntegration"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricksTransformation",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "unmountNotebook",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "ETLNotebook",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/aelouardy.ext@simplonformations.onmicrosoft.com/integration-et-gestion-des-donnees-de-transport-public-avec-azure/ETLDATABRICKS/unmount"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricksTransformation",
@@ -100,6 +127,37 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricksTransformation')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/triggerETL')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Automatisation",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 2,
+						"startTime": "2023-09-27T14:35:00",
+						"endTime": "2023-09-27T14:42:00",
+						"timeZone": "Morocco Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Automatisation')]"
 			]
 		}
 	]
