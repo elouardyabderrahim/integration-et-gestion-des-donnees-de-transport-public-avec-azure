@@ -27,7 +27,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "mountNotebook",
+						"name": "ETLNotebook",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -39,61 +39,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/aelouardy.ext@simplonformations.onmicrosoft.com/integration-et-gestion-des-donnees-de-transport-public-avec-azure/ETLDATABRICKS/mount"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureDatabricksTransformation",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "ETLNotebook",
-						"type": "DatabricksNotebook",
-						"dependsOn": [
-							{
-								"activity": "mountNotebook",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
 							"notebookPath": "/Repos/aelouardy.ext@simplonformations.onmicrosoft.com/integration-et-gestion-des-donnees-de-transport-public-avec-azure/ETLDATABRICKS/dataIntegration"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureDatabricksTransformation",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "unmountNotebook",
-						"type": "DatabricksNotebook",
-						"dependsOn": [
-							{
-								"activity": "ETLNotebook",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Repos/aelouardy.ext@simplonformations.onmicrosoft.com/integration-et-gestion-des-donnees-de-transport-public-avec-azure/ETLDATABRICKS/unmount"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureDatabricksTransformation",
@@ -150,8 +96,8 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 2,
-						"startTime": "2023-09-27T14:53:00",
-						"endTime": "2023-09-27T15:00:00",
+						"startTime": "2023-09-27T16:30:00",
+						"endTime": "2023-09-27T16:40:00",
 						"timeZone": "Morocco Standard Time"
 					}
 				}
